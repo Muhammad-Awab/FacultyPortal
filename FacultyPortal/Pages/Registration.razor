@@ -1,0 +1,143 @@
+﻿@inject IRegistrationService irs
+
+<PageTitle>Email</PageTitle>
+
+<style>
+
+
+	body {
+		background-color: #dee9ff;
+	}
+
+	.registration-form {
+		padding: 50px 0;
+	}
+
+		.registration-form form  {
+
+			background-color: #fff;
+			max-width: 600px;
+			margin: auto;
+			padding: 50px 70px;
+			box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
+			border-radius:35px !important;
+		}
+
+		.registration-form .form-icon {
+			text-align: center;
+			background-color: #5891ff;
+			border-radius: 50%;
+			font-size: 40px;
+			color: white;
+			width: 100px;
+			height: 100px;
+			margin: auto;
+			margin-bottom: 50px;
+			line-height: 100px;
+		}
+
+		.registration-form .item {
+			border-radius: 20px;
+			margin-bottom: 25px;
+			padding: 10px 20px;
+		}
+
+		.registration-form .create-account {
+			border-radius: 30px;
+			padding: 10px 20px;
+			font-size: 18px;
+			font-weight: bold;
+			background-color: #5791ff;
+			border: none;
+			color: white;
+			margin-top: 20px;
+		}
+
+		.registration-form .social-media {
+			max-width: 600px;
+			background-color: #fff;
+			margin: auto;
+			padding: 35px 0;
+			text-align: center;
+			border-bottom-left-radius: 30px;
+			border-bottom-right-radius: 30px;
+			color: #9fadca;
+			border-top: 1px solid #dee9ff;
+			box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
+		}
+
+		.registration-form .social-icons {
+			margin-top: 30px;
+			margin-bottom: 16px;
+		}
+
+			.registration-form .social-icons a {
+				font-size: 23px;
+				margin: 0 3px;
+				color: #5691ff;
+				border: 1px solid;
+				border-radius: 50%;
+				width: 45px;
+				display: inline-block;
+				height: 45px;
+				text-align: center;
+				background-color: #fff;
+				line-height: 45px;
+			}
+
+				.registration-form .social-icons a:hover {
+					text-decoration: none;
+					opacity: 0.6;
+				}
+</style>
+
+
+@if (registration != null)
+{
+	<div class="registration-form ">
+		<form>
+			<div class="form-icon">
+				<span><i class="icon icon-user"></i></span>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control item" id="username" @bind="registration.Name" placeholder="Username">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control item" id="password" @bind="registration.Password" placeholder="Password">
+			</div>
+
+			<div class="form-group">
+				<input type="email" class="form-control item" id="email" @bind="@VerifiedEmailAddress" readonly="true" placeholder="Email">
+			</div>
+
+			<div class="form-group">
+				<input type="text" class="form-control item" id="email" @bind="registration.Location" placeholder="location">
+			</div>
+
+			<div class="form-group">
+				<button class="btn btn-block create-account" @onclick="SaveRegistration">Create Account</button>
+			</div>
+		</form>
+		
+	</div>
+}
+
+@code {
+	private EntRegistration registration = new EntRegistration();
+	[Parameter] public string Evf { get; set; } = string.Empty;
+	private string VerifiedEmailAddress = string.Empty;
+	protected override async Task OnInitializedAsync()
+	{
+		VerifiedEmailAddress = Evf;
+	}
+
+	Random rnd = new Random();
+
+
+	public async Task SaveRegistration()
+	{
+		registration.Email = VerifiedEmailAddress;
+		registration.UserID = rnd.Next().ToString();
+		await irs.RegisterUser(registration);
+	}
+}
