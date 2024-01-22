@@ -1,17 +1,27 @@
 ﻿@page "/email"
+@layout Main
 @using System.ComponentModel.DataAnnotations;
 @using System.Net.Mail
 
+<style>
+	.box
+	{
+		height: 50vw !important;
+		width: 100vw;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+	}
+</style>
 
-
-<div class="container">
+<div class="container box" >
 	<div class="row">
 
 		@if (!IsEmailVerifed)
 		{
 			<div class="col-md-4 offset-lg-4 mt-4">
-				<div class="card shadow">
-					<div class="card-body text-center">
+				<div class="card shadow" style="max-width:30rem">
+					<div class="card-body ">
 						<h5>Email Verification</h5>
 						<EditForm Model="@me" OnValidSubmit="SendMail">
 							<DataAnnotationsValidator />
@@ -45,10 +55,10 @@
 		}
 		@if (IsEmailVerifed)
 		{
-		
 
-						<Registration Evf="@EmailToInvoke"></Registration>
-			
+
+			<Registration Evf="@EmailToInvoke"></Registration>
+
 		}
 
 
