@@ -129,7 +129,7 @@
 	public async Task SaveRegistration()
 	{
 		registration.Email = VerifiedEmailAddress;
-		registration.UserID = rnd.Next().ToString();
+		registration.UserID = rnd.Next();
 		await irs.RegisterUser(registration);
 	}
 

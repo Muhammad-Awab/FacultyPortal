@@ -5,12 +5,13 @@ using Microsoft.Data.SqlClient;
 
 namespace PortalAPI.Controllers
 {
-	[ApiController]
-	[Route("[controller]")]
+    [Route("[controller]")]
+    [ApiController]
+
 	public class LoginController : Controller
     {
         [HttpGet]
-        [Route("getlogin")]
+        [Route("getlogin/{Email}/{Password}")]
         public async Task<ActionResult> GetLogin(string Email, string Password)
         {
             ContentResult result = new ContentResult();

@@ -10,9 +10,9 @@ namespace FacultyPortal.Data
         {
             _httpClient = httpClient;
         }
-        public async Task<List<EntUser>> GetLogin(string Email, string Password)
+        public async Task<List<EntRegistration>> GetLogin(string Email, string Password)
         {
-            return await _httpClient.GetFromJsonAsync<List<EntUser>>("api/user/getlogin/{Email}/{Password}");
+            return await _httpClient.GetFromJsonAsync<List<EntRegistration>>($"/Login/getlogin/{Email}/{Password}");
         }
     }
 
