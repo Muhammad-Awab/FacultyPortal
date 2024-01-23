@@ -3,10 +3,8 @@
 @layout Main
 
 <style>
-    body, html {
-   
-    }
-
+    
+    
     .background-image {
         height: 100vh;
         position: relative;
@@ -44,10 +42,10 @@
             <div class="col-xl-10">
                 <div class="mt-5"></div>
 
-                <div class="card shadow  bg-body rounded border border-danger mt-2" style="border-radius: 1rem; ">
+                <div class="card shadow  bg-body rounded border border-primary mt-2 shadow-lg p-3 mb-5 bg-body rounded" style="border-radius: 1rem; ">
                     <div class="row g-0 align-items-center">
                         <div class="col-md-6 col-lg-5 d-none d-md-block">
-                            <img src="/8.png"
+                            <img src="https://play-lh.googleusercontent.com/w5SIprU1doxk7fpsvtD_Qf7SqsRwROLfBSR34sitCpZW8x5vwnKcK4gmohJq5F0PPVw"
                                  alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
                         </div>
                         <div class="col-md-6 col-lg-7 d-flex align-items-center">
@@ -57,30 +55,30 @@
                                 <form>
 
                                     <div class="d-flex align-items-center mb-3 pb-1">
-                                        <i class="fas fa-cubes fa-2x me-3"></i>
-                                        <div class="d-flex justify-content-center align-content-center">
-                                            <span class="h1 fw-bold mb-0"> <span style="color:red">Faculty</span> Portal</span>
-                                        </div>
+                                       
+                                     
+                                            <span class="h1 fw-bold mb-0">Faculty Portal</span>
+                                      
                                     </div>
 
-                                    <h3 class="fw-normal mb-3 pb-3 justify-content-center align-content-center " style="letter-spacing: 1px;"><b>Login <span style="color:red">with</span> us<span style="color:red">!</span>   </b></h3>
+                                    <h3 class="fw-normal mb-3 pb-3 justify-content-center align-content-center " style="letter-spacing: 1px;"><b>Login with us!  </b></h3>
 
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="form2Example17">Email address</label>
-                                        <input type="email" id="form2Example17" placeholder="Enter Email" class="form-control form-control-lg border border-danger"  @bind="Email"/>
+                                        <input type="email" id="form2Example17" placeholder="Enter Email" class="form-control form-control-lg border border-primary"  @bind="Email"/>
 
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="form2Example27">Password</label>
-                                        <input type="password" id="form2Example27" placeholder="Enter Password" class="form-control form-control-lg border border-danger"  @bind="Password"/>
+                                        <input type="password" id="form2Example27" placeholder="Enter Password" class="form-control form-control-lg border border-primary"  @bind="Password"/>
 
                                     </div>
 
 
                                     <div class="pt-1 mb-4 mt-2">
                                         <div class="d-flex justify-content-center align-content-center">
-                                            <button style="width: 166px;height: 35px;" type="button" class="btn btn-danger" @onclick="Authenticate">
+                                            <button style="width: 166px;height: 35px;" type="button" class="btn btn-primary" @onclick="Authenticate">
                                                 <span class="fw-bold">LOGIN</span>
                                             </button>
                                         </div>
@@ -90,11 +88,8 @@
 
                                     <div class="pt-1 mt-2">
                                         <div class="d-flex justify-content-center align-content-center">
-                                            <button style="width: 166px;height: 35px;" type="button" class="btn btn-danger">
-                                                <a href="/registration" style="text-decoration:none"> <h6 class="fw-bolder" style="color:white"><span class="fw-bold">REGISTER</span></h6> </a>
-
-
-                                            </button>
+                                           
+                                            <a href="/registration" style="width: 166px;height: 35px;" class="btn btn-outline-primary">REGISTER</a>
                                         </div>
                                     </div>
 
@@ -142,7 +137,7 @@
                 {
 
                     Role = "Admin",
-                    UserID = Convert.ToInt32(User[0].UserID)
+                    UserID = User[0].UserID
                 });
 
             navManager.NavigateTo("landingpage", true);

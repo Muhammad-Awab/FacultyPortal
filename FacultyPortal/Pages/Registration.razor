@@ -26,8 +26,8 @@
 			<div class="col-md-6 ">
 					<div class="card border-primary rounded-3">
 						<div class="card-body">
-							<div class="form-icon">
-								<span><i class="icon icon-user"></i></span>
+							<div class="form-icon text-center fs-2 accordion-body">
+								<span ><i class="icon icon-user"></i></span>
 							</div>
 							<h2 class="text-center fw-200" style="color:black">REGISTRATION</h2>
 							<br>
@@ -129,7 +129,7 @@
 	public async Task SaveRegistration()
 	{
 		registration.Email = VerifiedEmailAddress;
-		registration.UserID = rnd.Next();
+		registration.UserID = rnd.Next().ToString();
 		await irs.RegisterUser(registration);
 	}
 
