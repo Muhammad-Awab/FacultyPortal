@@ -4,7 +4,7 @@
 
 <style>
     body, html {
-        overflow: hidden;
+   
     }
 
     .background-image {
@@ -80,7 +80,7 @@
 
                                     <div class="pt-1 mb-4 mt-2">
                                         <div class="d-flex justify-content-center align-content-center">
-                                            <button style="width: 166px;height: 35px;" type="button" class="btn btn-danger" >
+                                            <button style="width: 166px;height: 35px;" type="button" class="btn btn-danger" @onclick="Authenticate">
                                                 <span class="fw-bold">LOGIN</span>
                                             </button>
                                         </div>
@@ -135,13 +135,13 @@
     {
         await GetLoginFromDb();
 
-        if (User!=null)
+        if (User.Count!=0)
         {
             var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
             await customAuthStateProvider.UpdateAuthenticationState(new EntRegistration
                 {
 
-                    Role = User[0].Role.ToString(),
+                    Role = "Admin",
                     UserID = Convert.ToInt32(User[0].UserID)
                 });
 

@@ -12,7 +12,7 @@ namespace FacultyPortal.Data
         }
         public async Task<List<EntRegistration>> GetLogin(string Email, string Password)
         {
-            return await _httpClient.GetFromJsonAsync<List<EntRegistration>>("api/user/getlogin/{Email}/{Password}");
+            return await _httpClient.GetFromJsonAsync<List<EntRegistration>>($"/Login/getlogin/{Email}/{Password}");
         }
     }
 
