@@ -1,101 +1,132 @@
-﻿@layout Main
+﻿@page "/registration"
 @inject IRegistrationService irs
+@inject NavigationManager nm
+@layout TopLayout
+@using System.ComponentModel.DataAnnotations;
+@using System.Net.Mail
 
 <PageTitle>Email</PageTitle>
 
 <style>
-
-	.registration-form {
-		padding: 50px 0;
+	body{
+		background-color: #e9ecef;
 	}
-
-		.registration-form form  {
-
-			background-color: #fff;
-			max-width: 600px;
-			margin: auto;
-			padding: 50px 70px;
-			border: 0.5px solid red !important;
-			box-shadow: 0px 2px 10px rgba(100, 0, 0, .075) ;
-			border-radius:35px !important;
-		}
-
-		.registration-form .form-icon {
-			text-align: center;
-			background-color: #DC3545;
-			border-radius: 50%;
-			font-size: 40px;
-			color: white;
-			width: 100px;
-			height: 100px;
-			margin: auto;
-			margin-bottom: 50px;
-			line-height: 100px;
-		}
-
-		.registration-form .item {
-			border-radius: 20px;
-			margin-bottom: 25px;
-			padding: 10px 20px;
-		}
-
-		.registration-form .create-account {
-			border-radius: 30px;
-			padding: 10px 20px;
-			font-size: 18px;
-			font-weight: bold;
-			background-color: #5791ff;
-			border: none;
-			color: white;
-			margin-top: 20px;
-		}
-
-	
+	.box
+	{
+		height:100vh;
+		display:flex;
+		justify-content:center;
+		align-content:center;
+	}
 </style>
 
 
-@if (registration != null)
+@if (Check==false)
 {
-	<div class="registration-form  ">
-		<form>
-			<div class="form-icon">
-				<span><i class="icon icon-user"></i></span>
-			</div>
-			<h2 class="text-center fw-200">REGISTRATION</h2>
-			<br>
-			<div class="form-group">
-				<input type="text" class="form-control item" id="username" @bind="registration.Name" placeholder="Username">
-			</div>
-			<div class="form-group">
-				<input type="password" class="form-control item" id="password" @bind="registration.Password" placeholder="Password">
-			</div>
 
-			<div class="form-group">
-				<input type="email" class="form-control item" id="email" @bind="@VerifiedEmailAddress" readonly="true" placeholder="Email">
-			</div>
+	<div class="container">
+		<div class="row box ">
+			<div class="col-md-6 ">
 
-			<div class="form-group">
-				<input type="text" class="form-control item" id="email" @bind="registration.Location" placeholder="location">
-			</div>
-
-			<div class="row">
-				<div class="col-md-2"></div>
-				<div class="col-md-8">
-					<div class="d-flex justify-content-center align-content-around">
+				<div class="card card-primary border-primary shadow-lg">
+					<div class="card-header">
+						<h3 class="card-title"></h3>
+					</div>
+						<div class="card-body">
+							<div class="form-icon text-center fs-2 accordion-body">
+								<span ><i class="icon icon-user"></i></span>
+							</div>
+							<h2 class="text-center fw-200" style="color:black">REGISTRATION</h2>
+						
+							<div class="form-group">
+							<label for="exampleInputEmail1">UserName</label>
+								<input type="text" class="form-control form-control-lg border " id="username" placeholder="Username" @bind="registration.Name">
+							</div>
+							
 						<div class="form-group">
-							<button class="btn btn-danger fw-bold  border-3" @onclick="SaveRegistration">Create Account</button>
+							<label for="exampleInputEmail1">Email</label>
+							<input type="email" class="form-control form-control-lg border" id="email" placeholder="Email" @bind="me.UserEmail">
+						</div>
+					
+							<div class="form-group">
+							<label for="exampleInputEmail1">Password:</label>
+							<input type="password" class="form-control form-control-lg border" id="password" placeholder="Password" @bind="registration.Password">
+							</div>
+						
+							
+
+							<div class="form-group">
+							<label for="exampleInputEmail1">Location</label>
+								<input type="text" class="form-control form-control-lg border" id="location" placeholder="Location" @bind="registration.Location">
+							</div>
+							
+							<div class="row">
+								<div class="col-md-12">
+									<div class="d-flex justify-content-center align-content-center">
+										<div class="form-group">
+											<button type="button" class="btn btn-primary fw-bold border-3" @onclick="SendMail">Create Account</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-2"></div>
-			</div>
 
-		</form>
+				</div>
+
+
 		
+			</div>
+		</div>
+
+
+}
+
+@if(Check==true)
+{
+	
+	<div class="container">
+		<div class="row box">
+			<div class="col-md-6">
+				<div class="card border-primary">
+					<div class="card-header ">
+						<h3 class="justify-content-center text-center fw-bold">Verification Code</h3>
+					</div>
+					<div class="card-body mt-2">
+						<div class=" justify-content-center align-content-center">
+							<div class="form-group">
+								<InputText id="verificationCode" class="form-control mb-3" @bind-Value="me.EnteredCode" placeholder="Enter code" />
+								<div class="row">
+									<div class="col-md-4"></div>
+									
+									<div class="col-md-4">
+										<div class="d-flex justify-content-center align-content-center">
+											<button type="button" class="btn btn-primary form-control @disabledbutton" @onclick="EmailVerified"> @ButtonTitle</button>
+
+										</div>
+										<div class="col-md-4"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
 }
 
 @code {
+
+	protected bool IsEmailSent = false;
+	protected bool IsEmailVerifed = false;
+	protected string disabledbutton = string.Empty;
+	protected bool codeGenerated = false;
+	protected bool Check = false;
+	private string errorMessage = string.Empty;
+	private string EmailToInvoke = string.Empty;
 	private EntRegistration registration = new EntRegistration();
 	[Parameter] public string Evf { get; set; } = string.Empty;
 	private string VerifiedEmailAddress = string.Empty;
@@ -110,7 +141,119 @@
 	public async Task SaveRegistration()
 	{
 		registration.Email = VerifiedEmailAddress;
-		registration.UserID = rnd.Next();
+		registration.UserID = rnd.Next().ToString();
 		await irs.RegisterUser(registration);
 	}
+
+
+
+
+	class ModelEmail
+	{
+		public string? NewNumber { get; set; }
+		[EmailAddress(ErrorMessage = "Invalid Email Address")]
+		public string? UserEmail { get; set; }
+		public string MessageFrom { get; } = "noreply.tourpk@gmail.com";
+		public string AppPassword { get; } = "crulupbvkvdxrnmf";
+		[StringLength(5, ErrorMessage = "Entered Code is Invalid")]
+		public string? EnteredCode { get; set; }
+	}
+	public string ButtonTitle = "Send Code";
+	ModelEmail me = new ModelEmail();
+
+	private void GenerateCode()
+	{
+		Random rnd = new Random();
+		me.NewNumber = rnd.Next(10000, 99999).ToString();
+		codeGenerated = true;
+	}
+
+	public async Task SendMail()
+	{
+		if (me.EnteredCode != null)
+		{
+
+			if (me.EnteredCode == me.NewNumber)
+			{
+				IsEmailVerifed = true;
+			}
+			else
+			{
+				errorMessage = "Incorrect verification code. Please try again.";
+			}
+		}
+		else
+		{
+			if (!string.IsNullOrEmpty(me.UserEmail) && !IsEmailSent)
+			{
+				try
+				{
+					GenerateCode();
+					disabledbutton = "disabled";
+					ButtonTitle = "Sending.......";
+					MailMessage mail = new MailMessage();
+					EmailToInvoke = me.UserEmail;
+					mail.To.Add(me.UserEmail);
+					mail.From = new MailAddress(me.MessageFrom, "TourPK");
+					mail.Subject = "Verification Code";
+					mail.Body = $"Your verification code is {me.NewNumber}";
+					mail.IsBodyHtml = true;
+
+					using (SmtpClient smtp = new SmtpClient
+						{
+							UseDefaultCredentials = false,
+							EnableSsl = true,
+							Host = "smtp.gmail.com",
+							Port = 587,
+							DeliveryMethod = SmtpDeliveryMethod.Network,
+							Credentials = new System.Net.NetworkCredential(me.MessageFrom, me.AppPassword)
+						})
+					{
+						await smtp.SendMailAsync(mail);
+						registration.Email = me.UserEmail;
+						registration.UserID = rnd.Next().ToString();
+						await irs.RegisterUser(registration);
+						Check = true;
+					}
+
+					IsEmailSent = true;
+					Check = true;
+					ButtonTitle = "Verify";
+					disabledbutton = string.Empty;
+				}
+				catch (SmtpException ex)
+				{
+					errorMessage = "Please check your internet connection.";
+					Console.WriteLine(ex.Message);
+				}
+			}
+			else
+			{
+				errorMessage = me.UserEmail != null ? "Please Enter Verification Code" : "Please enter your email address.";
+			}
+		}
+	}
+
+
+	public void EmailVerified()
+	{
+		if (me.EnteredCode != null)
+		{
+
+			if (me.EnteredCode == me.NewNumber)
+			{
+				IsEmailVerifed = true;
+				nm.NavigateTo("/");
+			}
+			else
+			{
+				errorMessage = "Incorrect verification code. Please try again.";
+			}
+		}
+
+
+	}
+
+
+
 }

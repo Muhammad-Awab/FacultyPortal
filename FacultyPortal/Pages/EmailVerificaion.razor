@@ -1,5 +1,5 @@
 ﻿@page "/email"
-@layout Main
+
 @using System.ComponentModel.DataAnnotations;
 @using System.Net.Mail
 
@@ -55,7 +55,6 @@
 		}
 		@if (IsEmailVerifed)
 		{
-
 
 			<Registration Evf="@EmailToInvoke"></Registration>
 
