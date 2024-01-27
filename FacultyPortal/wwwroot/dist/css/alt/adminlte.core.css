@@ -10688,6 +10688,7 @@ body,
 
 .wrapper .content-wrapper {
   min-height: calc(100vh - calc(3.5rem + 1px) - calc(3.5rem + 1px));
+  background-color: white !important;
 }
 
 .layout-boxed .wrapper {
@@ -11006,6 +11007,7 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
 
 .layout-navbar-fixed .wrapper .main-header.border-bottom-0 ~ .content-wrapper {
   margin-top: 3.5rem;
+
 }
 
 .layout-navbar-fixed .wrapper .content-wrapper {
@@ -12251,12 +12253,12 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .dark-mode .content-wrapper {
-  background-color: #454d55;
+  background-color: #ffffff;
   color: #fff;
 }
 
 .dark-mode .content-wrapper .content-header {
-  color: #fff;
+  color: white;
 }
 
 .main-header {
