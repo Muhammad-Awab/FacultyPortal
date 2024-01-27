@@ -32,9 +32,10 @@
                 </form>
 
                 <div class="social-auth-links text-center mt-2 mb-3">
-                    <button  class="btn btn-block btn-primary" @onclick="Authenticate">
+                    <button  class="btn btn-block btn-primary" type="button" @onclick="Authenticate">
                       Login
                     </button>
+                    @message
                     <a href="/registration" class="btn btn-block btn-danger">
                       Create An Account
                     </a>
@@ -158,9 +159,10 @@
     public string? Email { get; set; }
     public string? Password { get; set; }
     public string? Name { get; set; }
+    public string? message { get; set; }
 
 
-    List<EntRegistration> User = new List<EntRegistration>();
+    EntRegistration User = new EntRegistration();
 
     private async Task GetLoginFromDb()
     {
@@ -179,18 +181,26 @@
     {
         await GetLoginFromDb();
 
-        if (User.Count!=0)
+        if (User!=null)
         {
-            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-            await customAuthStateProvider.UpdateAuthenticationState(new EntRegistration
-                {
+            if (User.EmailVerified == "true")
+            {
 
-                    Role = "Admin",
-                    UserID = User[0].UserID
-                });
 
-            navManager.NavigateTo("landingpage", true);
+                var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+                await customAuthStateProvider.UpdateAuthenticationState(new EntRegistration
+                    {
 
+                        Role = "Admin",
+                        UserID = User.UserID
+                    });
+
+                navManager.NavigateTo("landingpage", true);
+            }
+            else
+            {
+                message = "Please Verify the email first";
+            }
         }
         else
         {

@@ -4,7 +4,7 @@ namespace FacultyPortal.Data
 {
     public interface ILoginService
     {
-        Task<List<EntRegistration>> GetLogin(string Email, string Password);
+        Task<EntRegistration> GetLogin(string Email, string Password);
         
     }
 }

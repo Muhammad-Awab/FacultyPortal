@@ -14,5 +14,11 @@ namespace FacultyPortal.Data
         {
             await _httpClient.PostAsJsonAsync("/Login/saveuserregistration", registerUser);
         }
-    }
+
+		public async Task UpdateRegisterUser(EntRegistration registerUser)
+		{
+			await _httpClient.PostAsJsonAsync("/Login/updateuserregistration", registerUser);
+		}
+
+	}
 }

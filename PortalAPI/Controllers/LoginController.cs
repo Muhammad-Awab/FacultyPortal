@@ -2,6 +2,8 @@
 using ClassLibraryEnt;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
+using ClassLibraryEnt;
 
 namespace PortalAPI.Controllers
 {
@@ -12,23 +14,25 @@ namespace PortalAPI.Controllers
     {
         [HttpGet]
         [Route("getlogin/{Email}/{Password}")]
-        public async Task<ActionResult> GetLogin(string Email, string Password)
+        public async Task<ActionResult<EntRegistration>> GetLogin(string Email, string Password)
         {
             ContentResult result = new ContentResult();
-            SqlParameter[] sp =
+            EntRegistration registration = new EntRegistration();
+
+            registration = DalCRUD.GetLoginRecord(Email, Password);
+            
+            
+            if (registration != null)
             {
-                new SqlParameter("@Email",Email),
-                new SqlParameter("@Password",Password),
-        };
-            result = (ContentResult)await DalCRUD.ReadData("SP_GetLogin", sp);
-            if (result != null)
-            {
-                return result;
+                               
+               return registration;
+                
+
             }
-            else
-            {
-                return new ContentResult();
-            }
+            //else
+            //{
+                return NotFound();
+            //}
         }
 
 
@@ -44,11 +48,27 @@ namespace PortalAPI.Controllers
                 new SqlParameter("@Email",er.Email),
                  new SqlParameter("@Password",er.Password),
                 new SqlParameter("@Location",er.Location),
-            };
+                new SqlParameter("@EmailVerified",er.EmailVerified),
+
+			};
             await DalCRUD.CRUD("SP_SaveRegistration", sp);
         }
 
 
+		[HttpPost]
+		[Route("updateuserregistration")]
+		public async Task UpdateUserRegistration(EntRegistration er)
+		{
+			SqlParameter[] sp =
+			{
+				
+				new SqlParameter("@Email",er.Email),
+				new SqlParameter("@EmailVerified",er.EmailVerified)
 
-    }
+			};
+			await DalCRUD.CRUD("SP_UpdateRegistration", sp);
+		}
+
+
+	}
 }

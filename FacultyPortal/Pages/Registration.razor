@@ -140,8 +140,9 @@
 
 	public async Task SaveRegistration()
 	{
-		registration.Email = VerifiedEmailAddress;
+		
 		registration.UserID = rnd.Next().ToString();
+		registration.EmailVerified = "false";
 		await irs.RegisterUser(registration);
 	}
 
@@ -210,9 +211,10 @@
 						})
 					{
 						await smtp.SendMailAsync(mail);
-						registration.Email = me.UserEmail;
-						registration.UserID = rnd.Next().ToString();
-						await irs.RegisterUser(registration);
+						SaveRegistration();
+						// registration.Email = me.UserEmail;
+						// registration.UserID = rnd.Next().ToString();
+						// await irs.RegisterUser(registration);
 						Check = true;
 					}
 
@@ -243,6 +245,9 @@
 			if (me.EnteredCode == me.NewNumber)
 			{
 				IsEmailVerifed = true;
+				registration.EmailVerified = "true";
+				irs.UpdateRegisterUser(registration);
+
 				nm.NavigateTo("/");
 			}
 			else

@@ -117,9 +117,34 @@ namespace ClassLibraryDAL
             }
 
         }
-   
 
+        public static EntRegistration GetLoginRecord(string Email, string Password)
+        {
+            EntRegistration ee = new EntRegistration();
+
+
+            SqlConnection con = DBHelper.GetConnection();
+            con.Open();
+            SqlCommand cmd = new SqlCommand("SP_GetLogin", con);
+            cmd.Parameters.AddWithValue("@Email", Email);
+            cmd.Parameters.AddWithValue("@Password", Password);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataReader sdr = cmd.ExecuteReader();
+
+            while (sdr.Read())
+            {
+                ee.UserID = sdr["UserID"].ToString();
+                ee.Email = sdr["Email"].ToString();
+                ee.Password = sdr["Password"].ToString();
+                ee.Location = sdr["Location"].ToString();
+                ee.EmailVerified = sdr["EmailVerified"].ToString();
+            }
+            con.Close();
+
+            return ee;
+        }
 
 
     }
 }
+    
