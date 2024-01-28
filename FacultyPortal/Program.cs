@@ -13,6 +13,8 @@ builder.Services.AddScoped<ProtectedSessionStorage>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddSingleton<ILoginService, LoginService>();
 builder.Services.AddSingleton<IRegistrationService, RegistrationService>();
+builder.Services.AddSingleton<IProfile, ProfileService>();
+
 
 builder.Services.AddHttpClient<IRegistrationService, RegistrationService>(e=>
 {
@@ -20,6 +22,12 @@ builder.Services.AddHttpClient<IRegistrationService, RegistrationService>(e=>
 });
 
 builder.Services.AddHttpClient<ILoginService, LoginService>(e=>
+{
+    e.BaseAddress = new Uri("http://localhost:5011/");
+
+});
+
+builder.Services.AddHttpClient<IProfile, ProfileService>(e =>
 {
     e.BaseAddress = new Uri("http://localhost:5011/");
 
