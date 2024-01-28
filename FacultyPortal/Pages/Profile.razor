@@ -68,14 +68,14 @@
                 <div class="col-md-6 mb-4">
                     <div class="form-outline">
                         <label class="form-label" for="form3Example2">Designation</label>
-                        <input type="email" id="form2Example17" placeholder="UI Developer" class="form-control form-control-lg border-dark" />
+                        <input type="email" id="form2Example17" @bind-value="_UserProfile.Designation"  placeholder=" UI Developer" class="form-control form-control-lg border-dark" />
 
                     </div>
                 </div>
 
                 <label class="form-label" for="form3Example2">Bio</label>
                 <div class="col-md-12">
-                    <textarea class="form-control border-dark" rows="6" cols="100" placeholder="Enter Something"></textarea>
+                    <textarea class="form-control border-dark" @bind="_UserProfile.Bio" rows="6" cols="100" placeholder="Enter Something"></textarea>
                 </div>
 
             </div>
