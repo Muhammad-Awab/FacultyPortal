@@ -1,0 +1,126 @@
+﻿@page "/login"
+@inject ILoginService loginservice
+@layout TopLayout
+<style>
+    .login-box, .register-box {
+        width: 465px;
+    }
+
+    .card-primary.card-outline {
+        border-top: 22px solid #343a40;
+    }
+
+    .login-page, .register-page {
+        height: 91vh;
+    }
+</style>
+<div class="hold-transition login-page">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="../../index2.html" class="h1"><b>Faculty</b>Login</a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+
+                <form>
+                    <div class="input-group mb-3">
+                        <input type="email" @bind="Email" class="form-control" placeholder="Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" @bind="Password" class="form-control" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </form>
+
+                <div class="social-auth-links text-center mt-2 mb-3">
+                    <button class="btn btn-block text-light" style="background-color:#343a40" type="button" @onclick="Authenticate">
+                      Login
+                    </button>
+                    @message
+                    <a href="/registration" class="btn btn-block btn-danger">
+                      Create An Account
+                    </a>
+                </div>
+             
+
+                <p class="mb-1">
+                    <a href="forgot-password.html">I forgot my password</a>
+                </p>
+               
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+@code {
+
+    public string? Email { get; set; }
+    public string? Password { get; set; }
+    public string? Name { get; set; }
+    public string? message { get; set; }
+
+
+    EntRegistration User = new EntRegistration();
+
+    private async Task GetLoginFromDb()
+    {
+        SqlParameter[] sp =
+        {
+                new SqlParameter("@Email",Email),
+                new SqlParameter("@Password", Password)
+
+    };
+
+        User = await loginservice.GetLogin(Email, Password);
+    }
+
+
+    private async Task Authenticate()
+    {
+        await GetLoginFromDb();
+
+        if (User!=null)
+        {
+            if (User.EmailVerified == "true")
+            {
+
+
+                var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+                await customAuthStateProvider.UpdateAuthenticationState(new EntRegistration
+                    {
+
+                        Role = "Admin",
+                        UserID = User.UserID
+                    });
+
+                navManager.NavigateTo("landingpage", true);
+            }
+            else
+            {
+                message = "Please Verify the email first";
+            }
+        }
+        else
+        {
+            await js.InvokeVoidAsync("alert", "invalid username or password");
+            return;
+        }
+    }
+
+
+}
+
+
