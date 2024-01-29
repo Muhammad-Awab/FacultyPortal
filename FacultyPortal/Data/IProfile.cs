@@ -4,7 +4,8 @@ namespace FacultyPortal.Data
 {
     public interface IProfile
     {
-        Task<bool> SaveUserProfile(EntProfile UserProfile);
+        Task<bool> SaveUserProfile(EntRegistration UserProfile);
+        Task<EntRegistration> LoadUserProfile(EntRegistration UserProfile);
 
     }
 }

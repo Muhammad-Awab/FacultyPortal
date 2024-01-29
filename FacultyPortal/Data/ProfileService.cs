@@ -14,7 +14,7 @@ namespace FacultyPortal.Data
         }
       
 
-        public async Task<bool> SaveUserProfile(EntProfile UserProfile)
+        public async Task<bool> SaveUserProfile(EntRegistration UserProfile)
         {
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/Login/saveuserprofile", UserProfile);
 
@@ -34,6 +34,11 @@ namespace FacultyPortal.Data
                 return false;
             }
 
+        }
+
+        public async Task<EntRegistration> LoadUserProfile(EntRegistration UserProfile)
+        {
+            return await _httpClient.GetFromJsonAsync<EntRegistration>($"/Login/getProfile/{UserProfile.UserID}");
         }
 
     }

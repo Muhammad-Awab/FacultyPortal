@@ -153,7 +153,32 @@ namespace ClassLibraryDAL
 
             return ee;
         }
+        public static EntRegistration GetProfile(string UserId)
+        {
+            EntRegistration ee = new EntRegistration();
 
+
+            SqlConnection con = DBHelper.GetConnection();
+            con.Open();
+            SqlCommand cmd = new SqlCommand("SP_GetProfileDataById", con);
+            cmd.Parameters.AddWithValue("@UserId", UserId);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataReader sdr = cmd.ExecuteReader();
+
+            while (sdr.Read())
+            {
+                ee.Name = sdr["Name"].ToString();
+                ee.Email = sdr["Email"].ToString();
+                ee.Location = sdr["Location"].ToString();
+                ee.DOB = Convert.ToDateTime(sdr["DOB"].ToString());
+                ee.PhoneNumber = sdr["PhoneNumber"].ToString();
+                ee.Company = sdr["Company"].ToString();
+                ee.Designation = sdr["Designation"].ToString();
+            }
+            con.Close();
+
+            return ee;
+        }
 
     }
 }

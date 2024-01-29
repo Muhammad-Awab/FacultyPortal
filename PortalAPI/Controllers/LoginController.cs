@@ -98,32 +98,34 @@ namespace PortalAPI.Controllers
 
         [HttpPost]
         [Route("saveuserprofile")]
-        public async Task<IActionResult> SaveUserProfile(EntProfile er)
+        public async Task<IActionResult> SaveUserProfile(EntRegistration er)
         {
             SqlParameter[] sp =
             {
         new SqlParameter("@UserID", er.UserID),
-        new SqlParameter("@FirstName", er.FirstName),
+        new SqlParameter("@Name", er.Name),
+        new SqlParameter("@Location", er.Location),
         new SqlParameter("@Email", er.Email),
-        new SqlParameter("@LastName", er.LastName),
         new SqlParameter("@PhoneNumber", er.PhoneNumber),
         new SqlParameter("@Company", er.Company),
+        new SqlParameter("@Designation", er.Designation),
+        new SqlParameter("@DOB", er.DOB.ToString()),
     };
 
             try
             {
                 // Execute the stored procedure and check the ResultCode
-                int resultCode = await DalCRUD.CRUD("InsertUser", sp);
+                int resultCode = await DalCRUD.CRUD("UpdateUser", sp);
 
                 if (resultCode == 0)
                 {
                     // Registration successful, return a success response
-                    return Ok(new { message = "Saved successful" });
+                    return Ok(new { message = "Update successful" });
                 }
                 else if (resultCode == 1)
                 {
                     // Email already exists, return a conflict response
-                    return Conflict(new { message = "Email already exists" });
+                    return Conflict(new { message = "Update Error" });
                 }
                 else
                 {
@@ -138,6 +140,28 @@ namespace PortalAPI.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("getProfile/{UserId}")]
+        public async Task<ActionResult<EntRegistration>> GetProfile(string UserId)
+        {
+            ContentResult result = new ContentResult();
+            EntRegistration registration = new EntRegistration();
+
+            registration = DalCRUD.GetProfile(UserId);
+
+
+            if (registration != null)
+            {
+
+                return registration;
+
+
+            }
+            
+            return NotFound();
+            
+        }
 
     }
 }
