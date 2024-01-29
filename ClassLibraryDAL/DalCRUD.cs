@@ -170,7 +170,6 @@ namespace ClassLibraryDAL
                 ee.Name = sdr["Name"].ToString();
                 ee.Email = sdr["Email"].ToString();
                 ee.Location = sdr["Location"].ToString();
-                ee.DOB = Convert.ToDateTime(sdr["DOB"].ToString());
                 ee.PhoneNumber = sdr["PhoneNumber"].ToString();
                 ee.Company = sdr["Company"].ToString();
                 ee.Designation = sdr["Designation"].ToString();
