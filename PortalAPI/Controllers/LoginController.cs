@@ -187,5 +187,21 @@ namespace PortalAPI.Controllers
 			}
 		}
 
+
+
+		[HttpPost]
+		[Route("forgetpassword")]
+		public async Task ForgetPassword(EntRegistration er)
+		{
+			SqlParameter[] sp =
+			{
+
+				new SqlParameter("@Email",er.Email),
+				new SqlParameter("@EmailVerified",er.EmailVerified),
+				new SqlParameter("@Password",er.Password)
+
+			};
+			await DalCRUD.CRUD("SP_ForgetPassword", sp);
+		}
 	}
 }

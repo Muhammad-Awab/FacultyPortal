@@ -4,6 +4,6 @@ namespace FacultyPortal.Data
 {
 	public interface IForgetPassword
 	{
-		Task<EntRegistration> GetEmailExits(string Email);
+		Task PasswordForget(EntRegistration registerUser);
 	}
 }

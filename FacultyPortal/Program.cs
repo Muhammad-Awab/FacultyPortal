@@ -15,8 +15,13 @@ builder.Services.AddSingleton<ILoginService, LoginService>();
 builder.Services.AddSingleton<IRegistrationService, RegistrationService>();
 builder.Services.AddSingleton<IProfile, ProfileService>();
 builder.Services.AddSingleton<IEmailExistChecker, EmailExistChecker>();
+builder.Services.AddSingleton<IForgetPassword, ForgetPassword>();
 
 
+builder.Services.AddHttpClient<IForgetPassword, ForgetPassword>(e =>
+{
+	e.BaseAddress = new Uri("http://localhost:5011/");
+});
 builder.Services.AddHttpClient<IRegistrationService, RegistrationService>(e=>
 {
     e.BaseAddress = new Uri("http://localhost:5011/");

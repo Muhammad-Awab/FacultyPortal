@@ -9,9 +9,11 @@ namespace FacultyPortal.Data
 		{
 			_httpClient = httpClient;
 		}
-		public async Task<EntRegistration> GetEmailExits(string Email)
+
+		public async Task PasswordForget(EntRegistration registerUser)
 		{
-			return await _httpClient.GetFromJsonAsync<EntRegistration>($"/ForgetPassword/getforgetpassword/{Email}");
+			await _httpClient.PostAsJsonAsync("/Login/forgetpassword", registerUser);
 		}
 	}
 }
+
