@@ -165,28 +165,26 @@ namespace PortalAPI.Controllers
 
 		[HttpGet]
 		[Route("getemailexits/{Email}")]
-		public async Task<int> GetEmailExits(string Email)
+		public async Task<ContentResult> GetEmailExits(string Email)
 		{
+			
 			ContentResult result = new ContentResult();
-			EntRegistration registration = new EntRegistration();
+			
 
 			SqlParameter[] sqlParameter =
 			{
                  new SqlParameter("@Email", Email)
 			};
-			int a = await DalCRUD.CRUD("SP_EmailExistChecker", sqlParameter);
+			result = (ContentResult)await DalCRUD.ReadData("SP_EmailExistChecker", sqlParameter);
 
-
-			if (a == 1)
+			if(result!=null)
 			{
-
-				return 0;
-
-
+				return result;
 			}
-			
-			return 1;
-
+			else
+			{
+				return new ContentResult();
+			}
 		}
 
 	}

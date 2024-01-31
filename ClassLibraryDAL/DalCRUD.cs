@@ -27,7 +27,7 @@ namespace ClassLibraryDAL
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddRange(sqlParameters);
-                        var v=await cmd.ExecuteNonQueryAsync();
+                        int v=await cmd.ExecuteNonQueryAsync();
 						await con.CloseAsync();
 						if (v==1)
                         {	

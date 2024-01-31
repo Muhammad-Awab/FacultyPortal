@@ -14,13 +14,17 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStat
 builder.Services.AddSingleton<ILoginService, LoginService>();
 builder.Services.AddSingleton<IRegistrationService, RegistrationService>();
 builder.Services.AddSingleton<IProfile, ProfileService>();
+builder.Services.AddSingleton<IEmailExistChecker, EmailExistChecker>();
 
 
 builder.Services.AddHttpClient<IRegistrationService, RegistrationService>(e=>
 {
     e.BaseAddress = new Uri("http://localhost:5011/");
 });
-
+builder.Services.AddHttpClient<IEmailExistChecker, EmailExistChecker>(e =>
+{
+	e.BaseAddress = new Uri("http://localhost:5011/");
+});
 builder.Services.AddHttpClient<ILoginService, LoginService>(e=>
 {
     e.BaseAddress = new Uri("http://localhost:5011/");
