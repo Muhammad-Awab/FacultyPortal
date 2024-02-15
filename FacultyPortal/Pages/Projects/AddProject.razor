@@ -1,0 +1,289 @@
+﻿@page "/add-project"
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row justify-content-center pt-5">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header text-center">
+                        <h3>Add New Project</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+
+                    <div class="card-body no form-control-border">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Project Title</label>
+                            <input type="text" class="form-control" placeholder="Enter Project Title">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Project Source</label>
+                            <select class="form-select form-control" aria-label="Default select example" @onchange="_ProjectSourceEdit">
+                                <option selected>Select Project Source</option>
+                                <option value="National">National</option>
+                                <option value="International">International</option>
+
+                            </select>
+                        </div>
+                        @if (national == "national")
+                        {
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">National</label>
+                                <select class="form-select form-control" aria-label="Default select example" @onchange="_HECEdit">
+                                    <option selected>Select National</option>
+                                    <option value="HEC">HEC</option>
+                                    <option value="NON-HEC">NON-HEC</option>
+                                    <option value="Contract-Research">Contract Research</option>
+                                    <option value="Consultancy">Consultancy</option>
+
+                                </select>
+                            </div>
+
+                            @if (HECEdit == "HEC")
+                            {
+                                <div class="form-group">
+                                    <select class="form-select form-control" aria-label="Default select example">
+                                        <option selected>Select HEC</option>
+                                        <option value="1">TDF</option>
+                                        <option value="2">NRPU</option>
+                                        <option value="2">LCF</option>
+                                        <option value="2">GECF</option>
+                                        <option value="2">RTTG</option>
+                                        <option value="2">SRGP</option>
+                                        <option value="2">Others</option>
+
+                                    </select>
+                                </div>
+                            }
+                            else if (HECEdit == "NON-HEC")
+                            {
+                                <div class="form-group">
+                                    <select class="form-select form-control" aria-label="Default select example">
+                                        <option selected>Select NON-HEC</option>
+                                        <option value="1">MOST</option>
+                                        <option value="2">IGNITE</option>
+                                        <option value="2">PSF</option>
+                                        <option value="2">PAF PC</option>
+                                        <option value="2">NESCOM</option>
+                                        <option value="2">PEC</option>
+                                        <option value="2">Others</option>
+
+                                    </select>
+                                </div>
+                            }
+                            else if (HEC == "Contract-Research")
+                            {
+                                <div class="form-group">
+                                    <select class="form-select form-control" aria-label="Default select example">
+                                        <option selected>Select Contract Research</option>
+                                        <option value="1">MOST</option>
+                                        <option value="2">IGNITE</option>
+                                        <option value="2">PSF</option>
+                                        <option value="2">PAF PC</option>
+                                        <option value="2">NESCOM</option>
+                                        <option value="2">PEC</option>
+                                        <option value="2">NASTP</option>
+                                        <option value="2">Others</option>
+
+                                    </select>
+                                </div>
+                            }
+                            else if (HEC == "Consultancy")
+                            {
+                                <div class="form-group">
+                                    <select class="form-select form-control" aria-label="Default select example">
+                                        <option selected>Select Consultancy</option>
+                                        <option value="1">MOST</option>
+                                        <option value="2">IGNITE</option>
+                                        <option value="2">PSF</option>
+                                        <option value="2">PAF PC</option>
+                                        <option value="2">NESCOM</option>
+                                        <option value="2">PEC</option>
+                                        <option value="2">NASTP</option>
+                                        <option value="2">Others</option>
+
+                                    </select>
+                                </div>
+                            }
+                        }
+                        @if (national == "international")
+                        {
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">International</label>
+                                <select class="form-select form-control" aria-label="Default select example" @onchange="_InternationalEdit">
+                                    <option selected>Select International</option>
+                                    <option value="1">Funding Agency</option>
+                                    <option value="Collaboration">Collaboration</option>
+
+                                </select>
+                            </div>
+                        }
+                        @if (International == "Collaboration")
+                        {
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Institution/Organization Name</label>
+                                <input type="text" class="form-control" placeholder="Enter Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email</label>
+                                <input type="email" class="form-control" placeholder="Enter Email">
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Phone Call Applied for</label>
+                            <div class="d-flex">
+                                <input type="text" class="form-control" placeholder="Enter Link">
+                                <input type="file" class="form-control" placeholder="Enter Link">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Project Thematic Area</label>
+                            <select class="form-select form-control" aria-label="Default select example">
+                                <option selected>Select Thematic Area</option>
+                                <option value="1">Engineering</option>
+                                <option value="2">Computer Science and Information technology</option>
+                                <option value="2">Basic Science</option>
+                                <option value="2">Humanities</option>
+                                <option value="2">Busincess and Management</option>
+                                <option value="2">Health Sciences</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Project Cost</label>
+                            <input type="number" class="form-control" placeholder="Enter Cost">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!--!--><label for="start_time">Project Tentative Start Date</label>
+                                    <input type="date" class="form-control" id="start_time" name="start_time" required="">
+                                </div><!--!-->
+                                <div class="col-md-6">
+                                    <!--!--><label for="end_time">Project Tentative End Date</label>
+                                    <input type="date" class="form-control" id="end_time" name="end_time" required="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group table-responsive">
+                            <div class="d-flex justify-content-between mt-2 mb-2">
+                                <label for="exampleInputEmail1">Collaborator</label>
+                                <button class="btn btn-primary">Add Collaborator</button>
+                            </div>
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">Name Collaborator</th>
+                                        <th scope="col">Department/Institution</th>
+                                        <th scope="col">Designaiton</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Awab</td>
+                                        <td>CS</td>
+                                        <td>student</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Awab</td>
+                                        <td>CS</td>
+                                        <td>student</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button class="btn btn-primary">Save</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@code {
+
+    public string? ProjectSourceEdit { get; set; }
+    public string? HEC { get; set; }
+    public string national { get; set; }
+    public string HECEdit { get; set; }
+    public string internationalEdit { get; set; }
+    public string International { get; set; }
+
+    private void _ProjectSourceEdit(ChangeEventArgs e)
+    {
+        ProjectSourceEdit = e.Value as string;
+        nationalcheck();
+    }
+
+    public void nationalcheck()
+    {
+        if (ProjectSourceEdit == "National")
+        {
+            national = "national";
+        }
+        else
+        {
+            national = "international";
+        }
+    }
+
+    private void _HECEdit(ChangeEventArgs e)
+    {
+        HEC = e.Value as string;
+        _HECcheck();
+    }
+
+    public void _HECcheck()
+    {
+        if (HEC == "HEC")
+        {
+            HECEdit = "HEC";
+        }
+        else if (HEC == "NON-HEC")
+        {
+            HECEdit = "NON-HEC";
+        }
+        else if (HEC == "Contract-Research")
+        {
+            HECEdit = "Contract-Research";
+        }
+        else if (HEC == "Consultancy")
+        {
+            HECEdit = "Consultancy";
+        }
+        else
+        {
+            HECEdit = "non";
+        }
+    }
+
+    public void _InternationalEdit(ChangeEventArgs e)
+    {
+        internationalEdit = e.Value as string;
+        _InternationalCheck();
+    }
+
+    public void _InternationalCheck()
+    {
+        if (internationalEdit == "Collaboration")
+        {
+            International = "Collaboration";
+        }
+        else
+        {
+            International = "NON";
+        }
+    }
+}
